@@ -68,6 +68,24 @@ only by disconnecting the jiggler board) movement should keep the computer
 awake as it should be indistinguishible from human operating the device by the
 computer.
 
+## Arduino
+
+I was unable to flash the board at all on Windows even when using the latest
+Arduino IDE and the USB driver that comes with it.
+
+I was unable to flash it on macOS either. The bare Arduino IDE install was not
+enough and I tried installing the driver recommended by SparkFun:
+https://learn.sparkfun.com/tutorials/usb-serial-driver-quick-install-/all
+
+But, this article points to an installer they host on their CDN and it is an
+older version which is not signed by Apple and won't work on Catalina.
+
+I found the up to date version on:
+https://ftdichip.com/drivers/vcp-drivers/
+
+I installed the signed-by-Apple latest version, but the Arduino IDE still did
+not show any USB serial ports.
+
 ## Raspberry Pi
 
 This same thing is possible to do on a Raspberry Pi, but it has no advantage
