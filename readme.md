@@ -77,6 +77,11 @@ for it.
 
 https://github.com/stjeong/rasp_vusb
 
+For the Pico specifically:
+
+- https://github.com/iot-crazy/pi-pico-usb-joystick
+- https://github.com/speedypotato/Pico-Game-Controller
+
 ## To-Do
 
 ### Find or buy a Micro
