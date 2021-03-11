@@ -68,6 +68,15 @@ only by disconnecting the jiggler board) movement should keep the computer
 awake as it should be indistinguishible from human operating the device by the
 computer.
 
+## Raspberry Pi
+
+This same thing is possible to do on a Raspberry Pi, but it has no advantage
+over using an Arduino. Maybe it would make sense with a Pi Pico? But that
+board is fairly new so there are probably not many libraries for such stuff
+for it.
+
+https://github.com/stjeong/rasp_vusb
+
 ## To-Do
 
 ### Find or buy a Micro
