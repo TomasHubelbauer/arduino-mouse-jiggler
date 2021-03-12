@@ -33,14 +33,24 @@ To use the Mouse library:
 To move the cursor with the library:
 
 ```ino
-#include <Mouse.h>
+##include <Mouse.h>
 
-// TODO: Add a four-state variable tracking the current movement direction
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  Mouse.begin();
+}
+
+int state;
+
 void loop() {
-  // TODO: Move in the diagonal given by the direction variable and advance it
-  Mouse.move(0, 0);
-  
-  // TODO: Do work or schedule an interrupt to achieve a delay of ~1 second
+  // Blink the LED to indicate activity
+  digitalWrite(LED_BUILTIN, state % 2 == 0 ? HIGH : LOW);
+  state++;
+
+  // Move the mouse in cyclic diagonal
+  Mouse.move(1, 0, 0);
+
+  delay(3000);
 }
 ```
 
@@ -55,7 +65,11 @@ and the Due and Zero as per the `Reference.MouseKeyboard` documentation:
 > These core libraries allow a 32u4 based boards or Due and Zero board to appear
 > as a native Mouse and/or Keyboard to a connected computer.
 
-My choice will probably be a [Micro](https://store.arduino.cc/arduino-micro).
+I tried a [Micro](https://store.arduino.cc/arduino-micro), but the Windows USB
+driver wouldn't recognize it. I also tried a Uno, but that board does not
+support USB HID.
+
+I will try a Micro Pro that I have.
 
 I think the USB connection between the board and the computer should be able to
 power the board. Once `Mouse.begin` is called, the computer will hopefully be
