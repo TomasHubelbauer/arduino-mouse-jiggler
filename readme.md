@@ -24,81 +24,71 @@ library that seems to come with the Arduino IDE. The
 method in this library moves the mouse cursor relatively to its current position
 making it ideal for a jiggler implementation.
 
-To use the Mouse library:
-
 ```ino
 #include <Mouse.h>
-```
-
-To move the cursor with the library:
-
-```ino
-##include <Mouse.h>
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Mouse.begin();
 }
 
-int state;
+byte state;
 
 void loop() {
   // Blink the LED to indicate activity
   digitalWrite(LED_BUILTIN, state % 2 == 0 ? HIGH : LOW);
-  state++;
-
+  
   // Move the mouse in cyclic diagonal
-  Mouse.move(1, 0, 0);
+  switch (state) {
+    case 0: Mouse.move(10, -10, 0); break;
+    case 1: Mouse.move(10, 10, 0); break;
+    case 2: Mouse.move(-10, 10, 0); break;
+    case 3: Mouse.move(-10, -10, 0); break;
+  }
+  
 
-  delay(3000);
+  // Advance / wrap state and wait
+  state = (state + 1) % 4;
+  delay(100);
 }
 ```
 
 ## Hardware
 
-Once the code is completed, that should be it and we can use the Arduino IDE to
-build and upload the code to the Arduino board. The compatible boards seem to
-include
-[32u4 based boards](https://learn.adafruit.com/how-to-choose-a-microcontroller/next-step-32u4-boards)
-and the Due and Zero as per the `Reference.MouseKeyboard` documentation:
+According to the [`Mouse.h`](https://www.arduino.cc/en/Reference.MouseKeyboard)
+documentation, [32u4 based boards](https://learn.adafruit.com/how-to-choose-a-microcontroller/next-step-32u4-boards)
+and Due and Zero boards are supported:
 
 > These core libraries allow a 32u4 based boards or Due and Zero board to appear
 > as a native Mouse and/or Keyboard to a connected computer.
 
-I tried a [Micro](https://store.arduino.cc/arduino-micro), but the Windows USB
-driver wouldn't recognize it. I also tried a Uno, but that board does not
-support USB HID.
+This means Micro and Micro Pro should work. It didn't for me. I tried:
 
-I will try a Micro Pro that I have.
+- [Micro](https://store.arduino.cc/arduino-micro) - Windows USB driver did not
+  find it
+- [Pro Micro](https://www.sparkfun.com/products/12640) - Windows USB driver did
+  not find it
+- [Uno](https://store.arduino.cc/arduino-uno-rev3) - No support for USB HID
+- [Leonardo](https://store.arduino.cc/arduino-leonardo-with-headers) - Worked!
+  I actually had a Freeduino Leonardo, but to the Arduino IDE it's all the same
 
-I think the USB connection between the board and the computer should be able to
-power the board. Once `Mouse.begin` is called, the computer will hopefully be
-able to immediately recognize and use the mouse without need for further setup.
+After flashing the program using the Arduino IDE, the board restarts and starts
+acting as a mouse immediately. From this point on merely connecting it to the
+computer will power it and make it act as a mouse until disconnected.
 
-The experience then should be just the bare Micro with a short USB cable, once
-plugged to the computer taking over the cursor and jiggling in around the point
-it was at at the moment of plugging in. This indefinite (or rather, interrupted
-only by disconnecting the jiggler board) movement should keep the computer
-awake as it should be indistinguishible from human operating the device by the
-computer.
+While having issues with the Windows USB driver not finding Micro and Micro Pro,
+I also tried on macOS, but I was unable to flash it on macOS either. The bare
+Arduino IDE install was not enough and I tried installing the driver recommended
+by SparkFun: https://learn.sparkfun.com/tutorials/usb-serial-driver-quick-install-/all
 
-## Arduino
+But, this article points to an installer they host on their CDN and it is an old
+version which is not signed by Apple and won't work on Catalina.
 
-I was unable to flash the board at all on Windows even when using the latest
-Arduino IDE and the USB driver that comes with it.
-
-I was unable to flash it on macOS either. The bare Arduino IDE install was not
-enough and I tried installing the driver recommended by SparkFun:
-https://learn.sparkfun.com/tutorials/usb-serial-driver-quick-install-/all
-
-But, this article points to an installer they host on their CDN and it is an
-older version which is not signed by Apple and won't work on Catalina.
-
-I found the up to date version on:
-https://ftdichip.com/drivers/vcp-drivers/
-
-I installed the signed-by-Apple latest version, but the Arduino IDE still did
-not show any USB serial ports.
+I found the up to date version on https://ftdichip.com/drivers/vcp-drivers. I
+installed the signed-by-Apple latest version for macOS, but the Arduino IDE did
+not show any USB serial ports anyway. I gave up trying to make it work on macOS,
+but it probably would work for the Uno and the Leonardo, mimicking the issue on
+Windows.
 
 ## Raspberry Pi
 
@@ -116,16 +106,4 @@ For the Pico specifically:
 
 ## To-Do
 
-### Find or buy a Micro
-
-I should have some.
-
-### Find USB cables to use
-
-If I'm going to program the board using the Mac I'll need a USB C to a micro
-USB cable. I'll also need a micro USB to a USB A cable for the Windows computer
-to control.
-
-### Develop the code, flash the Micro and test out whether it works or not
-
-Essentially, "do this stuff" once I have the equipment and time ready.
+### Try this out on the Pi Pico
