@@ -16,7 +16,7 @@ preventing a Windows computer from locking.
 There are several projects that implement other peripherials and translate them
 to mouse inputs, for example:
 
-https://www.youtube.com/watch?v=t8mE1ayw5bo
+[![](https://img.youtube.com/vi/t8mE1ayw5bo/default.jpg)](https://www.youtube.com/watch?v=t8mE1ayw5bo)
 
 They all use the [`Mouse.h`](https://www.arduino.cc/en/Reference.MouseKeyboard)
 library that seems to come with the Arduino IDE. The
