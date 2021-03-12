@@ -28,30 +28,29 @@ making it ideal for a jiggler implementation.
 #include <Mouse.h>
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
   Mouse.begin();
 }
 
+byte shift = 2;
+byte wait = 250;
 byte state;
 
 void loop() {
-  // Blink the LED to indicate activity
-  digitalWrite(LED_BUILTIN, state % 2 == 0 ? HIGH : LOW);
-  
-  // Move the mouse in cyclic diagonal
   switch (state) {
-    case 0: Mouse.move(10, -10, 0); break;
-    case 1: Mouse.move(10, 10, 0); break;
-    case 2: Mouse.move(-10, 10, 0); break;
-    case 3: Mouse.move(-10, -10, 0); break;
+    case 0: Mouse.move(shift, -shift, 0); break;
+    case 1: Mouse.move(shift, shift, 0); break;
+    case 2: Mouse.move(-shift, shift, 0); break;
+    case 3: Mouse.move(-shift, -shift, 0); break;
   }
-  
 
-  // Advance / wrap state and wait
   state = (state + 1) % 4;
-  delay(100);
+  delay(wait);
 }
 ```
+
+This code will move the mouse in a diagonal shape, staying around the origin and
+not sliding off. The on-board RX/TX LEDs will indicate USB communication, so you
+know the board runs and works.
 
 ## Hardware
 
