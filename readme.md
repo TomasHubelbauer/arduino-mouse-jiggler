@@ -52,6 +52,8 @@ This code will move the mouse in a diagonal shape, staying around the origin and
 not sliding off. The on-board RX/TX LEDs will indicate USB communication, so you
 know the board runs and works.
 
+![](screencast.gif)
+
 ## Hardware
 
 According to the [`Mouse.h`](https://www.arduino.cc/en/Reference.MouseKeyboard)
