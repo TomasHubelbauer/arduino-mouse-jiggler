@@ -1,17 +1,16 @@
 # Arduino Mouse Jiggler
 
-This repository is my attempt to build a mouse cursor jiggling appliance for
-preventing a Windows computer from locking.
+This repository hosts Arduino code for turning an Arduino Leonardo into a mouse
+jiggler.
 
-## Why/when to choose this route? What are the alternatives?
+## What? Why?
 
-- Turn off lock screen in Windows settings - unless group policy forbids it
-- Use [Caffeine](https://www.zhornsoftware.co.uk/caffeine/) or
-  [Mouse Jiggler](https://github.com/cerebrate/mousejiggler) to make Windows
-  think keyboard/mouse is being used - unless Windows ignores virtual inputs
-  (probably as a result of the same group policy) and locks itself anyway
+A mouse jiggler is a either a hardware appliance of a software program for mouse
+cursor movement automation for the purpose of preventing a computer from going
+to sleep. Sometimes software-based solutions are locked down by IT departments
+at which point hardware-based solutions save the day.
 
-## Software
+## Inspiration
 
 There are several projects that implement other peripherials and translate them
 to mouse inputs, for example:
@@ -24,6 +23,8 @@ library that seems to come with the Arduino IDE. The
 method in this library moves the mouse cursor relatively to its current position
 making it ideal for a jiggler implementation.
 
+## Code
+
 ```ino
 #include <Mouse.h>
 
@@ -33,17 +34,18 @@ void setup() {
 
 byte shift = 2;
 byte wait = 250;
-byte state;
 
 void loop() {
-  switch (state) {
-    case 0: Mouse.move(shift, -shift, 0); break;
-    case 1: Mouse.move(shift, shift, 0); break;
-    case 2: Mouse.move(-shift, shift, 0); break;
-    case 3: Mouse.move(-shift, -shift, 0); break;
-  }
-
-  state = (state + 1) % 4;
+  Mouse.move(shift, -shift, 0);
+  delay(wait);
+  
+  Mouse.move(shift, shift, 0);
+  delay(wait);
+  
+  Mouse.move(-shift, shift, 0);
+  delay(wait);
+  
+  Mouse.move(-shift, -shift, 0);
   delay(wait);
 }
 ```
@@ -54,7 +56,7 @@ know the board runs and works.
 
 ![](recording.gif) ![](screencast.gif)
 
-## Hardware
+## Arduino
 
 According to the [`Mouse.h`](https://www.arduino.cc/en/Reference.MouseKeyboard)
 documentation, [32u4 based boards](https://learn.adafruit.com/how-to-choose-a-microcontroller/next-step-32u4-boards)
@@ -93,30 +95,5 @@ Windows.
 
 ## Raspberry Pi
 
-This same thing is possible to do on a Raspberry Pi, but it has no advantage
-over using an Arduino. Maybe it would make sense with a Pi Pico? But that
-board is fairly new so there are probably not many libraries for such stuff
-for it.
-
-https://github.com/stjeong/rasp_vusb
-
-For the Pico specifically:
-
-### C
-
-- https://github.com/iot-crazy/pi-pico-usb-joystick (C)
-- https://github.com/speedypotato/Pico-Game-Controller (C)
-
-### Python
-
-An article:
-
-https://hridaybarot.home.blog/2021/01/31/using-raspberry-pi-pico-has-hid-device-to-control-mouse-and-keyboard
-
-A video with a repo:
-
-https://www.youtube.com/watch?v=MjCFJCfq8ko & https://github.com/novaspirit/PicoMouseJiggler
-
-## To-Do
-
-### Try this out on the Pi Pico
+I've implemented a Raspberry Pi based mouse jiggler in a complementary repo:
+https://github.com/TomasHubelbauer/raspi-mouse-jiggler
