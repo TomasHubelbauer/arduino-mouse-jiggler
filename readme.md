@@ -102,8 +102,9 @@ https://github.com/stjeong/rasp_vusb
 
 For the Pico specifically:
 
-- https://github.com/iot-crazy/pi-pico-usb-joystick
-- https://github.com/speedypotato/Pico-Game-Controller
+- https://github.com/iot-crazy/pi-pico-usb-joystick (C)
+- https://github.com/speedypotato/Pico-Game-Controller (C)
+- https://hridaybarot.home.blog/2021/01/31/using-raspberry-pi-pico-has-hid-device-to-control-mouse-and-keyboard (Python)
 
 ## To-Do
 
